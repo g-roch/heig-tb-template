@@ -39,6 +39,13 @@ cd latex
 make report
 ```
 
+Pour automatiquement reconstruire le rapport lorsqu'un fichier change
+
+```sh
+cd latex
+make report.pdf.pvc
+```
+
 Pour construire juste une sous-partie du rapport, le fichier 
 
 ```sh
