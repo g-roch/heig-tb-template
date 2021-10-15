@@ -24,6 +24,7 @@
 \RequirePackage{emptypage}
 \RequirePackage{shorttoc}
 \RequirePackage{color}
+\RequirePackage[colorlinks,unicode]{hyperref}
 
 \pagestyle{fancy}
 %\newgeometry{}
@@ -42,6 +43,7 @@
 \renewcommand{\title}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shorttitle{#2}}{\def\@shorttitle{#1}}%
     \def\@title{#2}
+    \hypersetup{pdftitle={\@shorttitle}}
 }
 
 % define \illustrationdir[file]
@@ -56,6 +58,7 @@
 \renewcommand{\author}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortauthor{#2}}{\def\@shortauthor{#1}}%
     \def\@author{#2}
+    \hypersetup{pdfauthor={\@author}}
 }
 \newif\if@authorgenderfem \@authorgenderfemfalse
 \newcommand{\authormasc}{\@authorgenderfemfalse}

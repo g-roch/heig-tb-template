@@ -5,6 +5,9 @@
 
 ## Ce qu'il reste à faire
 
+ - [ ] pdflatex
+ - - [x] Add meta information
+
  - [ ] Cahier des charges:
  - - [ ] Ajouter un template
  - - [ ] Inclure dans le rapport
