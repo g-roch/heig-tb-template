@@ -1,1 +1,3 @@
 # Travail de Bachelor de ...
+
+Les logos sont pris de https://intra.heig-vd.ch/services/communication/papeterie_logos/Pages/default.aspx
