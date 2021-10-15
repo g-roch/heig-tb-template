@@ -1,0 +1,190 @@
+%! Author = Gaby Roch
+%! Date = 15.10.21
+
+% Preamble
+%\documentclass[a4paper,oneside,12pt,french,draft]{heig-tb}
+%\documentclass[a4paper,twoside,12pt,french,draft]{heig-tb}
+\documentclass[a4paper,twoside,12pt,french]{heig-bachelor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% package include
+%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{listofitems}
+\usepackage[
+    style=alphabetic,
+%    style=reading,
+%    style=numeric,
+%    notetype=foot+end,
+]{biblatex}
+\usepackage{lipsum}
+\usepackage[colorlinks]{hyperref}
+
+\usepackage{subfiles}
+
+% on utilise un index
+\usepackage{imakeidx}
+\makeindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definition of custom command
+%
+% define \autofootcite{list of bibentry} % cite in footnote with bibmark, work for multiple entry separated by comma (,)
+\let\originalcite\cite
+\let\originalfullcite\fullcite
+\newcommand{\autofootcite}[1]{{% Group to localize change to footnote
+    \originalcite{#1}%
+    \readlist*\mylist{#1}%
+    \foreachitem\x\in\mylist[]{%
+        \renewcommand{\thefootnote}{\originalcite{\x}}% Update footnote counter representation
+        \footnotetext[0]{\originalfullcite{\x}}% Print footnote text
+    }%
+}}% Print footnote text
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use custom command as default
+%
+\let\autocite\autofootcite
+\let\cite\autofootcite
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuration du répertoire pour les images
+%
+\graphicspath{ {./images} }
+\bibliography{biblio}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Information à propos du travail de bachelor
+%
+% Pour utiliser une valeur dans le document, prefixer le nom
+% pas @ ou @short. example : 
+%    \title → \@title
+%    \title → \@shorttitle
+%
+% \title[Short title]{Long title for titlepags}
+% Titre du travail de bachelo
+\title[short title]{Titre du TB}
+
+% \illustration[filename]
+% Illustration de la page de titre
+%  - Si pas de fichier préciser, la valeur est illustration
+%  - Si la commande n'est pas appellé, il n'y a pas d'illustration
+\illustration
+
+% \author[initial]{name}
+% Nom et initial de l'étudiant
+\author[NÉ]{Nom de l'étudiant}
+
+% \authorfem or \authormasc
+% Pour la langue française, le genre de l'étudiant·e pour les accords
+% (You can use it with \if@authorgenderfem)
+\authorfem
+%\authormasc
+
+
+% \school[acronym]{name}
+% Nom et abréviation de l'école
+\school[HEIG-VD]{Haute École d'Ingénierie et de Gestion du Canton de Vaud}
+
+% \department[acronym]{name}
+% Nom du département
+\department[TIC]{Technologies de l'Information et de la Communication}
+
+% \faculty[acronym]{name}
+% Nom de la faculté
+\faculty[TELE]{Télécommunications}
+
+% \orientation[acronym]{name}
+% Nom de l'orientation
+\orientation[TS]{Sécurité de l'information}
+
+% \bachelorof[acronym]{name}
+% Type de travail de bachelor, utiliser dans le préambule
+\bachelorof{Ingénierie} % Ingénierie ou Économie d'entreprise
+
+% \confidential
+% Indique que le TB est confidentiel
+\confidential
+
+% \proposedby{person's name}{Company name}{Company address}
+% Entreprise ayant proposé le travail de bachelor
+%  - S'il n'y a pas d'entreprise commenter la ligne
+%\proposedby{Prénom-nom}{Entreprise}{Adresse\\NPA Ville}
+
+% \teacher[initial]{name}
+% Nom et initial de l'enseignant·e
+\teacher[PN]{P. nom}
+
+% Gender of the teacher (for french version)
+% (You can use it with \if@teachergenderfem)
+\teacherfem
+%\teachermasc
+
+% \schoolyear{20xx--20xx}
+% Academic year of bachelor
+\schoolyear{2020--2021}
+
+% Date du rendu (utiliser à diverse endroit)
+\date{\today}
+
+% Lieu de rendu (pour la signature)
+\location{Yverdon-les-Bains}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\begin{document}
+
+    \frontmatter
+    \maketitle
+
+    \begin{abstract}
+        Le contenu du résumé publiable
+    \end{abstract}
+
+    \makeatletter % Required for \@ macro
+    \begin{signedpage}{Préambule}{\@shortschool\\[0.5em] Le Chef du Département}{\@location}{\@date}
+
+        Ce travail de Bachelor (ci-après TB) est réalisé en fin de cursus d’études, en vue de l’obtention du titre de Bachelor of Science HES-SO en \@bachelorof.
+
+        En tant que travail académique, son contenu, sans préjuger de sa valeur, n'engage ni la responsabilité de l'auteur, ni celles du jury du travail de Bachelor et de l'École.
+
+        Toute utilisation, même partielle, de ce TB doit être faite dans le respect du droit d’auteur.
+    \end{signedpage}
+
+    \begin{signedpage}{Authentification}{\@author}{\@location}{\@date}
+        \if@authorgenderfem La soussignée\else Le soussigné\fi, \@author,
+        atteste par la présente avoir réalisé
+        \if@authorgenderfem seule\else seul\fi
+        ce travail et n’avoir utilisé aucune autre source que celles expressément mentionnées.
+    \end{signedpage}
+    \makeatother
+
+    \summary
+
+    \mainmatter
+
+
+    \subfile{test}
+
+
+    \backmatter
+
+    \tableofcontents
+    \listoffigures
+    \listoftables
+    \printbibliography
+    \printindex
+    % Glossaire
+    % Abréviations
+
+
+\end{document}
