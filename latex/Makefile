@@ -1,7 +1,7 @@
 
 PDFVIEWER=open
 
-TEX=$(wildcard *.tex)
+TEX=$(wildcard *.tex) $(wildcard */*.tex)
 PDF=$(patsubst %.tex,%.pdf,$(TEX))
 LATEXFLAGS=-pdf -e "\$$pdf_previewer = '$(PDFVIEWER) %O %S'" -M -MP -MF $*.d
 
@@ -10,9 +10,10 @@ report: report.pdf
 all: $(PDF)
 
 -include *.d
+-include */*.d
 
 $(PDF): %.pdf: %.tex
-	latexmk $(LATEXFLAGS) $*
+	latexmk -cd $(dir $*) $(LATEXFLAGS) $*
 
 $(patsubst %,%.pvc,$(PDF)): %.pdf.pvc: %.tex
 	latexmk $(LATEXFLAGS) -pvc $*

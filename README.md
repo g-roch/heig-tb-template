@@ -30,6 +30,9 @@
  - - - [ ] Ajouter le build du diff depuis la dernière release
 
  - [ ] Ajouter une manière de build les diff. du rapport (entre 2 commit)
+ 
+ - [ ] TOC
+ - - [ ] Ajouter les tables de figures/tableau sommaire et autre
 
 ## Rapport
 

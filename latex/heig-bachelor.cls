@@ -26,9 +26,11 @@
 \RequirePackage{color}
 \RequirePackage[colorlinks,unicode]{hyperref}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% en-tête
+%
 \pagestyle{fancy}
 %\newgeometry{}
-
 
 \fancyhead[RE,LO]{\includegraphics[height=1cm]{bachelor-school-slim}}
 \fancyhead[LE,RO]{\@ifconfidential}
@@ -38,73 +40,71 @@
     \fancyhead[LE,RO]{\@ifconfidential}
 }
 
-% define \title{TB title}
-%\let\titleoriginal\title
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% définition des setters
+%
+% \title[Short title]{TB title}
 \renewcommand{\title}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shorttitle{#2}}{\def\@shorttitle{#1}}%
     \def\@title{#2}
     \hypersetup{pdftitle={\@shorttitle}}
 }
 
-% define \illustrationdir[file]
+% \illustrationdir[filename=illustration]
 \newif\if@illustration \@illustrationfalse
 \newcommand{\illustration}[1][illustration]{
     \def\@illustration{#1}
     \@illustrationtrue
 }
 
-% define \author{Student name}
-%\let\authororiginal\author
+% \author[initial]{Student name}
 \renewcommand{\author}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortauthor{#2}}{\def\@shortauthor{#1}}%
     \def\@author{#2}
     \hypersetup{pdfauthor={\@author}}
 }
+
+% \authormasc & \authorfem
 \newif\if@authorgenderfem \@authorgenderfemfalse
 \newcommand{\authormasc}{\@authorgenderfemfalse}
 \newcommand{\authorfem}{\@authorgenderfemtrue}
 
+% \date not modified
 
-%define \date
-% Date du rendu
-%\let\dateoriginal\date
-%\renewcommand{\date}[1]{\dateoriginal{#1}\def\@date{#1}}
-%\date{\today}
-
-%define \school{School acronym}
+% \school[acronym]{School acronym}
 \newcommand{\school}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortschool{#2}}{\def\@shortschool{#1}}%
     \def\@school{#2}
 }
 
-%define \department{Department acronym}
+% \department[acronym]{Department acronym}
 \newcommand{\department}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortdepartment{#2}}{\def\@shortdepartment{#1}}%
     \def\@department{#2}
 }
 
-%define \faculty{Faculty name}
+% \faculty[acronym]{Faculty name}
 \newcommand{\faculty}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortfaculty{#2}}{\def\@shortfaculty{#1}}%
     \def\@faculty{#2}
 }
 
-%define \orientation{Orientation name}
+% \orientation[acronym]{Orientation name}
 \newcommand{\orientation}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortorientation{#2}}{\def\@shortorientation{#1}}%
     \def\@orientation{#2}
 }
 
-%define \bachelorof{Type of Bachelor}
+% \bachelorof{Type of Bachelor}
 \newcommand{\bachelorof}[1]{\def\@bachelorof{#1}}
 
-%define \confidential
+% \confidential
 \newif\if@confidential \@confidentialfalse
 \newcommand{\confidential}{\@confidentialtrue}
 \newcommand{\@confidential}{\if@confidential \confidentialname \else \nonconfidentialname \fi}
 \newcommand{\@ifconfidential}{\if@confidential \confidentialname \fi}
 
-%define \proposedby{Person name}{institution}{adress}
+% \proposedby{Person name}{institution}{adress}
 \newif\if@proposedby \@proposedbyfalse
 \newcommand{\proposedby}[3]{
     \@proposedbytrue
@@ -113,26 +113,26 @@
     \def\@proposedbyadress{#3}
 }
 
-%define \teacher{teacher name}
+% \teacher{teacher name}
 \newcommand{\teacher}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortteacher{#2}}{\def\@shortteacher{#1}}%
     \def\@teacher{#2}
 }
+
+% \teachermasc & \teacherfem
 \newif\if@teachergenderfem \@teachergenderfemfalse
 \newcommand{\teachermasc}{\@teachergenderfemfalse}
 \newcommand{\teacherfem}{\@teachergenderfemtrue}
 
-%define \schoolyear{from year-to year}
+% \schoolyear{20xx--20xx}
 \newcommand{\schoolyear}[1]{\def\@schoolyear{#1}}
 
-%define \location{city}
+% \location{city}
 \newcommand{\location}[1]{\def\@location{#1}}
 
-%define \abstract{abstract}
-%\newcommand{\abstract}[1]{\def\@abstract{#1}}
-
-\newcommand{\summary}[1][1]{\shorttableofcontents{\summaryname}{#1}}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% String d'affichage
+%
 \newcommand{\bachelorname}{Bachelor thesis}
 \newcommand{\confidentialname}{Confidential}
 \newcommand{\nonconfidentialname}{Non-confidential}
@@ -147,6 +147,9 @@
 \newcommand{\publishablesummaryname}{Publishable summary}
 \newcommand{\summaryname}{Summary}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% traduction française
+%
 \addto\captionsfrench{
     \renewcommand{\bachelorname}{Travail de Bachelor}
     \renewcommand{\confidentialname}{Confidentiel}
@@ -163,7 +166,13 @@
     \renewcommand{\summaryname}{Sommaire}
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% définition commande de rendu
+%
+% \summary[profondeur=1] -- Affiche un sommaire de profondeur `profondeur`
+\newcommand{\summary}[1][1]{\shorttableofcontents{\summaryname}{#1}}
 
+% \maketitle -- Affiche la page de titre
 \renewcommand\maketitle{
     \newgeometry{margin=2cm}
     \begin{titlepage}%
@@ -172,8 +181,8 @@
         \let \footnote \thanks
         \noindent
         \begin{tabularx}{\linewidth}{Xr}
-            \multirow{3}{*}{\includegraphics[height=4em]{bachelor-school}} & \departmentname\ \@shortdepartment \\
-            & \facultyname\ \@faculty            \\
+          \multirow{3}{*}{\includegraphics[height=4em]{bachelor-school}} & \departmentname\ \@shortdepartment \\[0.5em]
+            & \facultyname\ \@faculty            \\[0.5em]
             & \orientationname\ \@orientation
         \end{tabularx}
         \vskip 60\p@
@@ -183,23 +192,23 @@
                 {\Large \@title \\ \@confidential \par}%
             \vskip 2em%
             \if@illustration
-            \includegraphics[height=27em]{images/illustration.jpg}
+            \includegraphics[height=25em]{images/illustration.jpg}
             \else
             \vskip 10em
             \fi
             \vskip 2em
             \begin{tabularx}{\linewidth}{lX}
-                \textbf{\studentname~:}            & \textbf{\@author}                \\
+              \textbf{\studentname~:}            & \textbf{\@author}                \\[0.5em]
                 \if@proposedby
-                \textbf{\proposedbyname~:}         & \@proposedbyname                 \\
-                ~                                  & \@proposedbyinst                 \\
-                ~                                  & \makecell[l]{\@proposedbyadress} \\
-                \fi
-                \textbf{\responsibleteachername~:} & \@teacher                        \\
-                \textbf{\academicyearname~:}       & \@schoolyear                     \\
+                \textbf{\proposedbyname~:}         & \@proposedbyname                 \\[0.5em]
+                ~                                  & \@proposedbyinst                 \\[0.5em]
+                ~                                  & \makecell[l]{\@proposedbyadress} \\[0.5em]
+                \fi % TODO: change vspace for allow newlign in value
+                \textbf{\responsibleteachername~:} & \@teacher                        \\[0.5em]
+                \textbf{\academicyearname~:}       & \@schoolyear                     \\[0.5em]
             \end{tabularx}
             \if@illustration
-            \vskip 3em
+            \vskip 2em
             \else
             \vskip 10em
             \fi
@@ -238,7 +247,7 @@
 \noindent
 \begin{tabularx}{\linewidth}{XXX}
 Étudiant :               & Date et lieu : & Signature : \\[0.5em]
-\@author                 & \hrulefill     & \hrulefill  \\[1em]
+\@author                 & \hrulefill     & \hrulefill  \\[1em]  % TODO baiser la ligne
 Enseignant responsable : & Date et lieu : & Signature : \\[0.5em]
 \@teacher                & \hrulefill     & \hrulefill  \\[1em]
 \if@proposedby
