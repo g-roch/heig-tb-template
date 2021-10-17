@@ -3,9 +3,10 @@ PDFVIEWER=open
 
 TEX=$(wildcard *.tex) $(wildcard */*.tex)
 PDF=$(patsubst %.tex,%.pdf,$(TEX))
-LATEXFLAGS=-pdf -e "\$$pdf_previewer = '$(PDFVIEWER) %O %S'" -M -MP -MF $*.d
+LATEXFLAGS=-pdf -e "\$$pdf_previewer = '$(PDFVIEWER) %O %S'" -M -MP -MF $(notdir $*).d
 
-report: report.pdf
+report.pdf:
+report.pdf.pvc:
 
 all: $(PDF)
 
@@ -13,16 +14,27 @@ all: $(PDF)
 -include */*.d
 
 $(PDF): %.pdf: %.tex
-	latexmk -cd $(dir $*) $(LATEXFLAGS) $*
+	cd $(dir $*) && latexmk $(LATEXFLAGS) $(notdir $*)
 
+.PHONY: $(patsubst %,%.pvc,$(PDF))
 $(patsubst %,%.pvc,$(PDF)): %.pdf.pvc: %.tex
-	latexmk $(LATEXFLAGS) -pvc $*
+	cd $(dir $*) && latexmk $(LATEXFLAGS) -pvc $(notdir $*)
 
-dist-clean: clean
-	latexmk -C $(TEX)
-	rm -f $(patsubst %.tex,%.d,$(TEX))
 
-clean:
-	latexmk -c $(TEX)
-	rm -f $(patsubst %.tex,%.run.xml,$(TEX))
-	rm -f $(patsubst %.tex,%.bbl,$(TEX))
+.PHONY: dist-clean
+dist-clean: clean $(patsubst %.tex,%~dist-clean,$(TEX))
+
+.PHONY: $(patsubst %.tex,%~dist-clean,$(TEX))
+$(patsubst %.tex,%~dist-clean,$(TEX)): %~dist-clean:
+	cd $(dir $*) && latexmk $(LATEXFLAGS) -C $(notdir $*).tex
+
+.PHONY: clean
+clean: $(patsubst %.tex,%~clean,$(TEX))
+
+.PHONY: $(patsubst %.tex,%~clean,$(TEX))
+$(patsubst %.tex,%~clean,$(TEX)): %~clean:
+	cd $(dir $*) && latexmk $(LATEXFLAGS) -c $(notdir $*).tex
+	rm -f $*.run.xml $*.bbl
+	#rm -f $(patsubst %.tex,%.run.xml,$(TEX))
+	#rm -f $(patsubst %.tex,%.bbl,$(TEX))
+
