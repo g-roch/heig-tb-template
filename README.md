@@ -10,22 +10,25 @@
 Pour construire tout le rapport
 
 ```sh
-cd latex
 make report
+```
+
+Pour construire tout les PDFs de base
+
+```sh
+make pdf
 ```
 
 Pour automatiquement reconstruire le rapport lorsqu'un fichier change
 
 ```sh
-cd latex
-make report.pdf.pvc
+cd latex && make report.pdf.pvc
 ```
 
 Pour construire juste une sous-partie du rapport, le fichier 
 
 ```sh
-cd latex
-make <subfile>.pdf
+cd latex && make <subfile>.pdf
 ```
 
 avec `<subfile>.tex` correspondant au modele suivant :
