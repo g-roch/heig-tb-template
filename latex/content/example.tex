@@ -1,0 +1,65 @@
+\documentclass[../report]{subfiles}
+\begin{document}
+
+    \part{PASDF}
+
+    \chapter{Example de chapitre}
+
+    \section{Afficher une commande}
+
+    \lstset{
+      belowcaptionskip=1\baselineskip,
+      breaklines=true,
+      frame=L,
+      xleftmargin=\parindent,
+      showstringspaces=false,
+      basicstyle=\footnotesize\ttfamily,
+      keywordstyle=\bfseries\color{green!40!black},
+      commentstyle=\itshape\color{purple!40!black},
+      identifierstyle=\color{blue},
+      stringstyle=\color{orange},
+      backgroundcolor=\color{white!90!black},
+      tabsize=3,
+      frameround=fttt,
+      frame=trBL,
+      %inputpath=...,
+    }
+    \lstdefinestyle{numbers}{
+      numbers=left,
+      numberstyle=\scriptsize,
+    }
+
+    \begin{lstlisting}[language=bash, caption={Descritpion du code},style=numbers]
+$> echo ls -al test_underscore $$* "coucou éè œ" éè œ  # my commentaire very very very very very long
+echo asdf
+echo qwer
+echo yxcv
+echo plm
+    \end{lstlisting}%
+    ...
+    
+    \chapter{CASDF}
+
+    \section{sasdf}
+
+    \subsection{ssasdf}
+
+    \subsubsection{sssasdf}
+
+    nouveau word! \footnote{asdf}
+
+    plm ! \index{qwe}
+
+    asd \cite{greenwade95,greenwade93}
+
+    asd \footnote{asdf}
+
+    \begin{nota}\lipsum[1]\end{nota}
+    \begin{question}\lipsum[1]\end{question}
+    \begin{important}\lipsum[1]\end{important}
+    \begin{warning}\lipsum[1]\end{warning}
+
+    \marginpar{plm}
+    \newpage
+    qwe
+\end{document}
