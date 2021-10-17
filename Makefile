@@ -25,14 +25,13 @@ dist-clean:
 	cd $(LATEXDIR) && $(MAKE) dist-clean
 
 
-
 diff-%:
 	rm -fr diff-$*
 	mkdir -p diff-$*
-	cp -r latex/ diff-$*/latex
-	cd diff-$*/latex && $(MAKE) dist-clean
-	find diff-$*/latex -name '*.tex' -delete
-	latexdiff-git -d diff-$* -r $* $(shell find latex -name '*.tex') 
-	sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/latex/*/ -name '*.tex')
-	cd diff-$*/latex && $(MAKE) all
+	cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
+	cd diff-$*/$(LATEXDIR) && $(MAKE) dist-clean
+	find diff-$*/$(LATEXDIR) -name '*.tex' -delete
+	latexdiff-git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
+	sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/$(LATEXDIR)/*/ -name '*.tex')
+	cd diff-$*/$(LATEXDIR) && $(MAKE) all
 

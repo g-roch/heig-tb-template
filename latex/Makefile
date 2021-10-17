@@ -35,6 +35,4 @@ clean: $(patsubst %.tex,%~clean,$(TEX))
 $(patsubst %.tex,%~clean,$(TEX)): %~clean:
 	cd $(dir $*) && latexmk $(LATEXFLAGS) -c $(notdir $*).tex
 	rm -f $*.run.xml $*.bbl
-	#rm -f $(patsubst %.tex,%.run.xml,$(TEX))
-	#rm -f $(patsubst %.tex,%.bbl,$(TEX))
 
