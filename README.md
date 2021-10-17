@@ -37,6 +37,18 @@ avec `<subfile>.tex` correspondant au modele suivant :
 \end{document}
 ```
 
+Pour construire tout les PDFs en affichant les différences avec un commit : 
+
+```sh
+make diff-<ref>
+```
+
+example: 
+
+```sh
+make diff-main
+```
+
 
 
 Les logos sont pris de https://intra.heig-vd.ch/services/communication/papeterie_logos/Pages/default.aspx
