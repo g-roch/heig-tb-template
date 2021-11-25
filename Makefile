@@ -27,7 +27,8 @@ dist-clean:
 
 .PHONY: lastdiff
 lastdiff: diff-$(PREVIOUS_VERSION)
-	ln -fs $< $@
+	ln -Tfs $< $@
+	ln -Tfs $<.zip $@.zip
 
 .PHONY: none-file
 none-file:
@@ -42,10 +43,16 @@ diff-%: none-file
 	echo '```' >> diff-$*/CHANGELOG.txt
 	cat diff-$*/CHANGELOG.txt
 	## Generate pdf diff
-	#cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
-	#cd diff-$*/$(LATEXDIR) && $(MAKE) dist-clean
-	#find diff-$*/$(LATEXDIR) -name '*.tex' -delete
-	#latexdiff-vc --git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
-	#sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/$(LATEXDIR)/*/ -name '*.tex')
-	#cd diff-$*/$(LATEXDIR) && $(MAKE) all
+	cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
+	cd diff-$*/$(LATEXDIR) && $(MAKE) dist-clean
+	find diff-$*/$(LATEXDIR) -name '*.tex' -delete
+	latexdiff-vc --git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
+	sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/$(LATEXDIR)/*/ -name '*.tex')
+	cd diff-$*/$(LATEXDIR) && $(MAKE) all
+	for f in diff-$*/$(LATEXDIR)/*.pdf; do\
+		new=$$(echo $$f | sed 's~/$(LATEXDIR)/~/diff-$*-~') ;\
+		cp $$f $$new ;\
+		done
+	zip diff-$*.zip $$(find $@/$(LATEXDIR) -name '*.pdf')
+
 

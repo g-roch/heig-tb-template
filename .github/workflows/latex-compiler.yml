@@ -45,4 +45,6 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             latex/*.pdf
+            diff-${{ steps.create_tag.outputs.tag }}/*.pdf
+            diff-${{ steps.create_tag.outputs.tag }}.zip
 
