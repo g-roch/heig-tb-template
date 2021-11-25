@@ -14,6 +14,7 @@ Le Makefile utilise les programmes suivants (doivent être dans le path) :
  - `sed`
  - `make`
  - `latexmk`
+ - `latexdiff` et `latexdiff-vc`
 
 ## Rapport
 
