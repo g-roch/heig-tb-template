@@ -3,6 +3,18 @@
  - Ce dépôt git contient un template **QUI N'EST PAS FINI**
  - Les issues et pull-request sont les bienvenues, merci beaucoup
 
+## Dépendance
+
+Le paquet `texlive-full` (sous Debian/Ubuntu) contient toutes les dépendences. Une installation plus
+spécifique peut fonctionner aussi, mais n'est pas documenté.
+
+Le Makefile utilise les programmes suivants (doivent être dans le path) :
+ - `find`
+ - `latexdiff-git`
+ - `sed`
+ - `make`
+ - `latexmk`
+
 ## Rapport
 
 ### Construction
