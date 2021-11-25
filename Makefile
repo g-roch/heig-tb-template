@@ -36,14 +36,16 @@ diff-%: none-file
 	rm -fr diff-$*
 	mkdir -p diff-$*
 	# Generate message
-	git shortlog $*..HEAD >> diff-$*/CHANGELOG.txt
+	git shortlog $*..HEAD | sed "s/^\\s\\+/- /" >> diff-$*/CHANGELOG.txt
+	echo '```' >> diff-$*/CHANGELOG.txt
 	git diff --compact-summary $*..HEAD >> diff-$*/CHANGELOG.txt
+	echo '```' >> diff-$*/CHANGELOG.txt
 	cat diff-$*/CHANGELOG.txt
-	# Generate pdf diff
-	cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
-	cd diff-$*/$(LATEXDIR) && $(MAKE) dist-clean
-	find diff-$*/$(LATEXDIR) -name '*.tex' -delete
-	latexdiff-vc --git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
-	sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/$(LATEXDIR)/*/ -name '*.tex')
-	cd diff-$*/$(LATEXDIR) && $(MAKE) all
+	## Generate pdf diff
+	#cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
+	#cd diff-$*/$(LATEXDIR) && $(MAKE) dist-clean
+	#find diff-$*/$(LATEXDIR) -name '*.tex' -delete
+	#latexdiff-vc --git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
+	#sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/$(LATEXDIR)/*/ -name '*.tex')
+	#cd diff-$*/$(LATEXDIR) && $(MAKE) all
 
