@@ -14,7 +14,7 @@ jobs:
         id: create_tag
         run: |
           tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*')
-          echo "::set-output name=tag::$tag"
+          echo "::set-output name=tag::build-$tag"
 
       - name: Create Draft Release
         id: create_release
