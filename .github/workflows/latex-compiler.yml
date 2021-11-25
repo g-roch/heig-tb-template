@@ -14,6 +14,7 @@ jobs:
         id: create_tag
         run: |
           currenttag=$(git tag --points-at HEAD 'v[0-9]*' | head -1)
+          lasttag=$(git tag --no-contains HEAD --list 'v[0-9]*' | head -1)
           if [ "$currenttag" = "" ]; then
             tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*' | head -1)
             echo "::set-output name=tag::build-$tag"
@@ -24,6 +25,7 @@ jobs:
             echo "::set-output name=name::$currenttag"
             echo "::set-output name=prerelease::false"
           fi
+          echo "::set-output name=lasttag::$lasttag"
 
       - name: Compile LaTeX document
         uses: ./.github/action
@@ -45,6 +47,6 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             latex/*.pdf
-            diff-${{ steps.create_tag.outputs.tag }}/*.pdf
-            diff-${{ steps.create_tag.outputs.tag }}.zip
+            diff-${{ steps.create_tag.outputs.lasttag }}/*.pdf
+            diff-${{ steps.create_tag.outputs.lasttag }}.zip
 

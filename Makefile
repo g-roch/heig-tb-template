@@ -2,7 +2,7 @@
 LATEXDIR=latex
 
 LATEX_BASE=$(patsubst $(LATEXDIR)/%.tex,%,$(wildcard $(LATEXDIR)/*.tex))
-PREVIOUS_VERSION=$(shell git tag --no-contains HEAD --list 'v*' 2> /dev/null | tail -1)
+PREVIOUS_VERSION=$(shell git tag --no-contains HEAD --list 'v[0-9]*' 2> /dev/null | tail -1)
 
 default: report
 .PHONY: default
