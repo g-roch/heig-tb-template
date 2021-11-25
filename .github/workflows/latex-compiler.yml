@@ -1,0 +1,55 @@
+name: Build LaTeX document
+on: [push]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Create tag
+        id: create_tag
+        if: startsWith(github.ref, 'refs/heads/main')
+        run: |
+          currenttag=$(git tag --points-at HEAD 'v[0-9]*' | head -1)
+          lasttag=$(git tag --no-contains HEAD --list 'v[0-9]*' | head -1)
+          if [ "$currenttag" = "" ]; then
+            tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*' | head -1)
+            echo "::set-output name=tag::build-$tag"
+            echo "::set-output name=name::$tag"
+            echo "::set-output name=prerelease::true"
+          else
+            echo "::set-output name=tag::$currenttag"
+            echo "::set-output name=name::$currenttag"
+            echo "::set-output name=prerelease::false"
+          fi
+          echo "::set-output name=lasttag::$lasttag"
+
+      - name: Compile LaTeX document
+        uses: ./.github/action
+        with:
+          target: all
+
+      - name: Compile LaTeX diff document
+        if: startsWith(github.ref, 'refs/heads/main')
+        uses: ./.github/action
+        with:
+          target: lastdiff
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/heads/main')
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: lastdiff/CHANGELOG.txt
+          prerelease: ${{ steps.create_tag.outputs.prerelease }}
+          name: ${{ steps.create_tag.outputs.name }}
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          fail_on_unmatched_files: true
+          files: |
+            latex/*.pdf
+            diff-${{ steps.create_tag.outputs.lasttag }}/*.pdf
+            diff-${{ steps.create_tag.outputs.lasttag }}.zip
+
