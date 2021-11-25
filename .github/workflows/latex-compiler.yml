@@ -28,7 +28,7 @@ jobs:
           prerelease: false
 
       - name: Compile LaTeX document
-        uses: ./.github/actions
+        uses: ./.github/action
         with:
           target: all
 
