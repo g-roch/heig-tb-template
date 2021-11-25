@@ -18,11 +18,11 @@ jobs:
             tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*' | head -1)
             echo "::set-output name=tag::build-$tag"
             echo "::set-output name=name::$tag"
-            echo "::set-output name=prerelease::1"
+            echo "::set-output name=prerelease::true"
           else
             echo "::set-output name=tag::$currenttag"
             echo "::set-output name=name::$currenttag"
-            echo "::set-output name=prerelease::0"
+            echo "::set-output name=prerelease::false"
           fi
 
       - name: Compile LaTeX document
