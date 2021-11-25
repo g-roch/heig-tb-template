@@ -29,15 +29,15 @@ dist-clean:
 lastdiff: diff-$(PREVIOUS_VERSION)
 	ln -fs $< $@
 
-#.PHONY: none-file
-#none-file:
+.PHONY: none-file
+none-file:
 
-diff-%: #none-file
+diff-%: none-file
 	rm -fr diff-$*
 	mkdir -p diff-$*
 	# Generate message
-	git shortlog >> diff-$*/CHANGELOG.txt
-	git diff --compact-summary >> diff-$*/CHANGELOG.txt
+	git shortlog $*..HEAD >> diff-$*/CHANGELOG.txt
+	git diff --compact-summary $*..HEAD >> diff-$*/CHANGELOG.txt
 	cat diff-$*/CHANGELOG.txt
 	# Generate pdf diff
 	cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
