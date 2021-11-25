@@ -13,38 +13,36 @@ jobs:
       - name: Create tag
         id: create_tag
         run: |
-          tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*')
-          echo "::set-output name=tag::build-$tag"
-
-      - name: Create Draft Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.create_tag.outputs.tag }}
-          release_name: ${{ steps.create_tag.outputs.tag }}
-          draft: true
-          prerelease: false
+          currenttag=$(git tag --points-at HEAD 'v[0-9]*' | head -1)
+          if [ "$currenttag" = "" ]; then
+            tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*' | head -1)
+            echo "::set-output name=tag::build-$tag"
+            echo "::set-output name=name::$tag"
+            echo "::set-output name=prerelease::1"
+          else
+            echo "::set-output name=tag::$currenttag"
+            echo "::set-output name=name::$currenttag"
+            echo "::set-output name=prerelease::0"
+          fi
 
       - name: Compile LaTeX document
         uses: ./.github/action
         with:
           target: all
 
-      - name: Upload asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Compile LaTeX diff document
+        uses: ./.github/action
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./latex/report.pdf
-          asset_name: report.pdf
-          asset_content_type: application/pdf
+          target: lastdiff
 
-      - uses: eregon/publish-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          release_id: ${{ steps.create_release.outputs.id }}
+          body_path: lastdiff/CHANGELOG.txt
+          prerelease: ${{ steps.create_tag.outputs.prerelease }}
+          name: ${{ steps.create_tag.outputs.name }}
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          fail_on_unmatched_files: true
+          files: |
+            latex/*.pdf
 
