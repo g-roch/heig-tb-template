@@ -26,6 +26,7 @@ clean:
 .PHONY: dist-clean
 dist-clean:
 	cd $(LATEXDIR) && $(MAKE) dist-clean
+	rm -fr diff-* lastdiff lastdiff.zip
 
 .PHONY: lastdiff
 lastdiff: diff-$(PREVIOUS_VERSION)
