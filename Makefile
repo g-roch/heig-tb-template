@@ -2,6 +2,9 @@
 LATEXDIR=latex
 
 LATEX_BASE=$(patsubst $(LATEXDIR)/%.tex,%,$(wildcard $(LATEXDIR)/*.tex))
+PREVIOUS_VERSION=$(shell git tag --no-contains HEAD --list 'v[0-9]*' 2> /dev/null | tail -1)
+
+SHELL := /bin/bash
 
 default: report
 .PHONY: default
@@ -24,14 +27,34 @@ clean:
 dist-clean:
 	cd $(LATEXDIR) && $(MAKE) dist-clean
 
+.PHONY: lastdiff
+lastdiff: diff-$(PREVIOUS_VERSION)
+	ln -Tfs $< $@
+	ln -Tfs $<.zip $@.zip
 
-diff-%:
+.PHONY: none-file
+none-file:
+
+diff-%: none-file
 	rm -fr diff-$*
 	mkdir -p diff-$*
+	# Generate message
+	git shortlog $*$$([[ ! "$*" =~ ".." ]] && echo '..') | sed "s/^\\s\\+/- /" >> diff-$*/CHANGELOG.txt
+	echo '```' >> diff-$*/CHANGELOG.txt
+	git diff --compact-summary $*$$([[ ! "$*" =~ ".." ]] && echo '..') >> diff-$*/CHANGELOG.txt
+	echo '```' >> diff-$*/CHANGELOG.txt
+	cat diff-$*/CHANGELOG.txt
+	# Generate pdf diff
 	cp -r $(LATEXDIR)/ diff-$*/$(LATEXDIR)
 	cd diff-$*/$(LATEXDIR) && $(MAKE) dist-clean
 	find diff-$*/$(LATEXDIR) -name '*.tex' -delete
-	latexdiff-git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
+	latexdiff-vc --git -d diff-$* -r $* $(shell find $(LATEXDIR) -name '*.tex') 
 	sed -i '/%DIF PREAMBLE/d' $$(find diff-$*/$(LATEXDIR)/*/ -name '*.tex')
 	cd diff-$*/$(LATEXDIR) && $(MAKE) all
+	for f in diff-$*/$(LATEXDIR)/*.pdf; do\
+		new=$$(echo $$f | sed 's~/$(LATEXDIR)/~/diff-$*-~') ;\
+		cp $$f $$new ;\
+		done
+	zip diff-$*.zip $$(find $@/$(LATEXDIR) -name '*.pdf')
+
 

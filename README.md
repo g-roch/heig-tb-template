@@ -10,11 +10,11 @@ spécifique peut fonctionner aussi, mais n'est pas documenté.
 
 Le Makefile utilise les programmes suivants (doivent être dans le path) :
  - `find`
- - `latexdiff-git`
+ - `latexdiff` et `latexdiff-vc`
  - `sed`
  - `make`
  - `latexmk`
- - `latexdiff` et `latexdiff-vc`
+ - `zip`
 
 ## Rapport
 
