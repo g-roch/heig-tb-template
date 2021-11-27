@@ -13,17 +13,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create tag
-        id: create_tag
-        if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/v')
+      - name: Create tag if on main
+        if: startsWith(github.ref, 'refs/heads/main')
+        run: |
+          lasttag=$(git tag --list --no-contains HEAD --merged HEAD --sort=authordate 'v[0-9]*' | tail -1)
+          tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*')
+          echo "::set-output name=tag::build-$tag"
+          echo "::set-output name=name::$tag"
+          echo "::set-output name=prerelease::true"
+          echo "::set-output name=lasttag::$lasttag"
+
+      - name: Create tag if on tag
+        if: startsWith(github.ref, 'refs/tags/v')
         run: |
           currenttag=$(git tag --list --points-at HEAD 'v[0-9]*' | head -1)
           lasttag=$(git tag --list --no-contains HEAD --merged HEAD --sort=authordate 'v[0-9]*' | tail -1)
           if [ "$currenttag" = "" ]; then
-            tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*')
-            echo "::set-output name=tag::build-$tag"
-            echo "::set-output name=name::$tag"
-            echo "::set-output name=prerelease::true"
+            exit 1
           else
             echo "::set-output name=tag::$currenttag"
             echo "::set-output name=name::$currenttag"
@@ -47,12 +53,12 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: lastdiff/CHANGELOG.txt
-          prerelease: ${{ steps.create_tag.outputs.prerelease }}
-          name: ${{ steps.create_tag.outputs.name }}
-          tag_name: ${{ steps.create_tag.outputs.tag }}
+          prerelease: ${{ steps.*.outputs.prerelease }}
+          name: ${{ steps.*.outputs.name }}
+          tag_name: ${{ steps.*.outputs.tag }}
           fail_on_unmatched_files: true
           files: |
             latex/*.pdf
-            diff-${{ steps.create_tag.outputs.lasttag }}/*.pdf
-            diff-${{ steps.create_tag.outputs.lasttag }}.zip
+            diff-${{ steps.*.outputs.lasttag }}/*.pdf
+            diff-${{ steps.*.outputs.lasttag }}.zip
 
