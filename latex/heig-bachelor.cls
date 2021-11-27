@@ -12,6 +12,7 @@
 
 \LoadClass{book}
 
+
 \RequirePackage{xifthen}
 \RequirePackage{tabularx}
 \RequirePackage{babel}
@@ -53,12 +54,25 @@
     \hypersetup{pdftitle={\@shorttitle}}
 }
 
-% \illustrationdir[filename=illustration]
+% \version[version other place]{verion on titlepage}
+\newcommand{\version}[2][]{
+    \ifthenelse{\equal{#1}{}}{\def\@shortversion{#2}}{\def\@shortversion{#1}}%
+    \def\@version{#2}
+}
+
+% \illustration[filename=illustration]
 \newif\if@illustration \@illustrationfalse
 \newcommand{\illustration}[1][illustration]{
     \def\@illustration{#1}
     \@illustrationtrue
 }
+
+% \illustrationheight[size=23em]
+\def\@illustrationheight{23em}
+\newcommand{\illustrationheight}[1][23em]{
+    \def\@illustrationheight{#1}
+}
+
 
 % \author[initial]{Student name}
 \renewcommand{\author}[2][]{
@@ -170,6 +184,12 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% définition commande utils
+%
+% \inputMake{filaneme} -- input le filename or require for a make to latexmk
+\newcommand\inputMake[1]{\InputIfFileExists{#1}{\expandafter}{\typeout{No file #1.}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % définition commande de rendu
 %
 % \summary[profondeur=1] -- Affiche un sommaire de profondeur `profondeur`
@@ -193,9 +213,11 @@
         {\LARGE \bachelorname \par}%
             \vskip 2em%
                 {\Large \@title \\ \@confidential \par}%
+            \vskip 1em%
+                {\Large \@version \par}%
             \vskip 2em%
             \if@illustration
-            \includegraphics[height=25em]{images/illustration.jpg}
+            \includegraphics[height=\@illustrationheight]{\@illustration}
             \else
             \vskip 10em
             \fi
@@ -344,6 +366,7 @@ Enseignant responsable : & Date et lieu : & Signature : \\[0.5em]
   {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
   {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1 
 }
+
 
 
 \endinput

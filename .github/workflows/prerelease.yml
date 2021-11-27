@@ -18,7 +18,7 @@ jobs:
         id: create_tag
         run: |
           lasttag=$(git tag --list --no-contains HEAD --merged HEAD --sort=authordate 'v[0-9]*' | tail -1)
-          tag=$(git describe --tags --abbrev=10 --match 'v[0-9]*')
+          tag=$(git describe --tags --match 'v[0-9]*')
           echo "::set-output name=tag::build-$tag"
           echo "::set-output name=name::$tag"
           echo "::set-output name=lasttag::$lasttag"

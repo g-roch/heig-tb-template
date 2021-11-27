@@ -1,6 +1,9 @@
 # dependence file:
 *.d
 
+# Dynamic files:
+/_dyn/
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

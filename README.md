@@ -76,6 +76,15 @@ Branche principale à utiliser : `main` (pour utiliser une autre branche, adapte
 
 Lors d'un push sur `main`, le rapport est automatiquement construit et publier dans une releases github.
 
+## Dossier
+
+ - `diff-*.zip`: PDF de diff avec `*`
+ - `diff-*/`: Construction des fichiers de différence avec `*` (si corresponds à `*..*` contient les différences entre les deux commits referencé)
+ - `lastdiff.zip`: PDF de difference avec la dernière version taggée
+ - `lastdiff`: Difference avec la dernière version taggée
+ - `latex/[a-zA-Z0-9]*/`: Contients des subfile LaTeX (ils sont inclus dans un/des fichiers `latex/*.tex`
+ - `latex/_dyn/`: Contient des fichiers générée dynamiquement par `make` pour LaTeX
+ - `latex/`: Contient les sources LaTeX
 
 ## Crédits
 

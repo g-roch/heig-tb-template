@@ -23,6 +23,8 @@
 
 \usepackage{subfiles}
 
+%\usepackage{catchfile}
+
 % on utilise un index
 \usepackage{imakeidx}
 \makeindex
@@ -69,11 +71,19 @@
 % Titre du travail de bachelo
 \title[short title]{Titre du TB}
 
+% \version[version other place]{verion on titlepage}
+% Version du travail
+\version[\inputMake{_dyn/git-version-short}]{\inputMake{_dyn/git-version}}
+
 % \illustration[filename]
 % Illustration de la page de titre
 %  - Si pas de fichier préciser, la valeur est illustration
 %  - Si la commande n'est pas appellé, il n'y a pas d'illustration
 \illustration
+
+% \illustrationheight[height]
+% Hauteur de l'illustration (défaut: 23em)
+%\illustrationheight[23em]
 
 % \author[initial]{name}
 % Nom et initial de l'étudiant
