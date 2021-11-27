@@ -5,6 +5,8 @@
 
 ## Dépendance
 
+### Rapport
+
 Le paquet `texlive-full` (sous Debian/Ubuntu) contient toutes les dépendences. Une installation plus
 spécifique peut fonctionner aussi, mais n'est pas documenté.
 
@@ -16,36 +18,37 @@ Le Makefile utilise les programmes suivants (doivent être dans le path) :
  - `latexmk`
  - `zip`
 
-## Rapport
+## Construction
 
-### Construction
+### Rapport
 
-Pour construire tout le rapport
+Attention la construction dépends dur dépôt git, voir section `Dépôt git`
+
+Pour construire tout le rapport:
 
 ```sh
 make report
 ```
 
-Pour construire tout les PDFs de base
+Pour construire tout les PDFs de base:
 
 ```sh
 make pdf
 ```
 
-Pour automatiquement reconstruire le rapport lorsqu'un fichier change
+Pour automatiquement reconstruire le rapport lorsqu'un fichier change:
 
 ```sh
 cd latex && make report.pdf.pvc
 ```
 
-Pour construire juste une sous-partie du rapport, le fichier 
+Pour construire juste une sous-partie du rapport:
 
 ```sh
-cd latex && make <subfile>.pdf
+cd latex && make <dir>/<subfile>.pdf
 ```
 
-avec `<subfile>.tex` correspondant au modele suivant :
-
+avec le fichier `<dir>/<subfile>.tex` existant et correspondant au modele suivant :
 ```latex
 \documentclass[report]{subfiles}
 \begin{document}
@@ -65,6 +68,16 @@ example:
 make diff-main
 ```
 
+## Dépôt git
+
+Pour que la construction fonctionne vous devez avoir un tag dans l'historique git matchant avec `v[0-9]*` (ex: `v0.5.3` ou `v2`)
+
+Branche principale à utiliser : `main` (pour utiliser une autre branche, adaptez les fichiers github actions)
+
+Lors d'un push sur `main`, le rapport est automatiquement construit et publier dans une releases github.
 
 
-Les logos sont pris de https://intra.heig-vd.ch/services/communication/papeterie_logos/Pages/default.aspx
+## Crédits
+
+Les logos sont pris de https://intra.heig-vd.ch/services/communication/papeterie_logos/Pages/default.aspx .
+Ces logos ne sont pas libre de droit.
