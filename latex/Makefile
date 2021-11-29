@@ -3,7 +3,11 @@ PDFVIEWER=open
 
 TEX=$(wildcard [a-zA-Z0-9]*.tex) $(wildcard [a-zA-Z0-9]*/*.tex)
 PDF=$(patsubst %.tex,%.pdf,$(TEX))
+TEXROOT=$(wildcard [a-zA-Z0-9]*.tex)
+PDFROOT=$(patsubst %.tex,%.pdf,$(TEXROOT))
 LATEXFLAGS=-pdf -e "\$$pdf_previewer = '$(PDFVIEWER) %O %S'" -M -MP -MF $(notdir $*).d -use-make
+
+default: $(PDFROOT)
 
 report.pdf:
 report.pdf.pvc:
@@ -12,7 +16,6 @@ all: $(PDF)
 
 -include *.d
 -include */*.d
--include */*/*.d
 
 $(PDF): %.pdf: %.tex
 	cd $(dir $*) && latexmk $(LATEXFLAGS) $(notdir $*)

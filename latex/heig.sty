@@ -12,6 +12,15 @@
     \hypersetup{pdftitle={\@shorttitle}}
 }
 
+% \titlesuffix[pub. summary]{publiable summary}
+\newif\if@titlesuffix \@titlesuffixfalse
+\newcommand{\titlesuffix}[2][]{
+    \ifthenelse{\equal{#1}{}}{\def\@shorttitlesuffix{#2}}{\def\@shorttitlesuffix{#1}}%
+    \def\@titlesuffix{#2}
+    \hypersetup{pdftitle={\@shorttitle\ --- \@shorttitlesuffix}}
+    \@titlesuffixtrue
+}
+
 % \version[version other place]{verion on titlepage}
 \newcommand{\version}[2][]{
     \ifthenelse{\equal{#1}{}}{\def\@shortversion{#2}}{\def\@shortversion{#1}}%
