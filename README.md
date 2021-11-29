@@ -18,6 +18,9 @@ Le Makefile utilise les programmes suivants (doivent être dans le path) :
  - `latexmk`
  - `zip`
 
+La construction peut également se faire à travers un container docker, grâce au scipt `make-on-docker.sh`
+qui remplace la commande `make` dans les examples suivants. (Seul docker est une dépendance dans ce cas)
+
 ## Construction
 
 ### Rapport
