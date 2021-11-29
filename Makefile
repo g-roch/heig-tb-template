@@ -29,12 +29,17 @@ dist-clean:
 	rm -fr diff-* lastdiff lastdiff.zip
 
 .PHONY: lastdiff
-lastdiff: diff-$(PREVIOUS_VERSION)
-	ln -Tfs $< $@
-	ln -Tfs $<.zip $@.zip
+lastdiff: diff-$(PREVIOUS_VERSION).zip
+	ln -Tfs $(patsubst %.zip,%,$<) $@
+	ln -Tfs $< $@.zip
 
 .PHONY: none-file
 none-file:
+
+diff-%.zip: none-file
+	$(MAKE) diff-$* || true
+	echo zip diff-$*.zip $$(find diff-$*/$(LATEXDIR) -name '*.pdf')
+	zip diff-$*.zip diff-$*/CHANGELOG.txt $$(find diff-$*/$(LATEXDIR) -name '*.pdf')
 
 diff-%: none-file
 	rm -fr diff-$*
@@ -56,6 +61,5 @@ diff-%: none-file
 		new=$$(echo $$f | sed 's~/$(LATEXDIR)/~/diff-$*-~') ;\
 		cp $$f $$new ;\
 		done
-	zip diff-$*.zip $$(find $@/$(LATEXDIR) -name '*.pdf')
 
 

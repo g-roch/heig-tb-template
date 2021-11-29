@@ -35,6 +35,7 @@ jobs:
 
       - name: Compile LaTeX diff document
         uses: ./.github/action
+        continue-on-error: true
         with:
           target: lastdiff
 
@@ -45,7 +46,7 @@ jobs:
           prerelease: ${{ steps.create_tag.outputs.prerelease }}
           name: ${{ steps.create_tag.outputs.name }}
           tag_name: ${{ steps.create_tag.outputs.tag }}
-          fail_on_unmatched_files: true
+          fail_on_unmatched_files: false
           files: |
             latex/*.pdf
             diff-${{ steps.create_tag.outputs.lasttag }}/*.pdf
