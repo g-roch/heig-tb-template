@@ -97,3 +97,6 @@ Lors d'un push sur `main`, le rapport est automatiquement construit et publier d
 
 Les logos sont pris de https://intra.heig-vd.ch/services/communication/papeterie_logos/Pages/default.aspx .
 Ces logos ne sont pas libre de droit.
+
+L'illustration d'example provient de https://www.peppercarrot.com/fr/artworks/misc.html .
+Elle a été crée par David Revoy et est sous [CC-BY](https://creativecommons.org/licenses/by/4.0/)
