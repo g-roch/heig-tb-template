@@ -3,6 +3,13 @@
  - Ce dépôt git contient un template **QUI N'EST PAS FINI**
  - Les issues et pull-request sont les bienvenues, merci beaucoup
 
+## Fonctionnalité
+
+ - Modèle de rapport de TB
+ - Construction de PDF indiquant les différances entre 2 commits.
+ - Construction uniquement d'un sous-fichier LaTeX.
+ - Indication du tag git de version (v[0-9]*) dans le PDF.
+
 ## Dépendance
 
 ### Rapport
