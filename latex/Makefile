@@ -1,7 +1,7 @@
 
 PDFVIEWER=open
 
-TEX=$(wildcard *.tex) $(wildcard [a-zA-Z0-9]*/*.tex)
+TEX=$(wildcard [a-zA-Z0-9]*.tex) $(wildcard [a-zA-Z0-9]*/*.tex)
 PDF=$(patsubst %.tex,%.pdf,$(TEX))
 LATEXFLAGS=-pdf -e "\$$pdf_previewer = '$(PDFVIEWER) %O %S'" -M -MP -MF $(notdir $*).d -use-make
 
