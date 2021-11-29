@@ -1,7 +1,7 @@
 
 LATEXDIR=latex
 
-LATEX_BASE=$(patsubst $(LATEXDIR)/%.tex,%,$(wildcard $(LATEXDIR)/*.tex))
+LATEX_BASE=$(patsubst $(LATEXDIR)/%.tex,%,$(wildcard $(LATEXDIR)/[a-zA-Z0-9]*.tex))
 PREVIOUS_VERSION=$(shell git tag --list --no-contains HEAD --merged HEAD --sort=authordate 'v[0-9]*' 2> /dev/null | tail -1)
 
 SHELL := /bin/bash
