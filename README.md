@@ -101,6 +101,8 @@ Lors d'un push sur `main`, le rapport est automatiquement construit et publier d
  - `latex/`: Contient les sources LaTeX
  - `latex/publishable-summary.tex`: Résumé publiable (également inclue de le rapport)
  - `latex/report.tex`: Rapport de TB
+ - `latex/bibliography.tex`: Toutes les entrées bibliographiques
+ - `latex/bibliography-draft.tex`: Toutes les entrées bibliographiques, avec les identifiants pour les citer dans LaTeX
 
 ## Crédits
 
