@@ -17,7 +17,12 @@
 \usepackage{minitoc}
 \mtcsetdepth{minitoc}{2} % Profondeur des minitoc
 %\mtcsettitle{minitoc}{\chaptername{}s} % Set title of minitoc
-\renewcommand\afterchapter{\minitoc~\\[1em]}
+\renewcommand\afterchapter{
+  \begin{center}
+  \begin{minipage}{0.75\linewidth}
+    \minitoc
+  \end{minipage}
+  \end{center}\vspace{2em}}
 %\usepackage{heig}
 \usepackage[
     style=alphabetic,
