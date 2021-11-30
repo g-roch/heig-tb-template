@@ -21,13 +21,14 @@
 \RequirePackage{makecell}
 \RequirePackage{fancyhdr}
 %\RequirePackage[headings]{fullpage}
-\RequirePackage[a4paper,margin=1.5cm,top=2.25cm,bottom=2.25cm]{geometry}
+\RequirePackage[a4paper,margin=1.25cm,top=2.5cm,headsep=1cm,bottom=2.25cm]{geometry}
 \RequirePackage{emptypage}
 \RequirePackage{shorttoc}
 \RequirePackage{color}
 \RequirePackage[colorlinks,unicode]{hyperref}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{fancyvrb}
+\RequirePackage[tikz]{bclogo}
 \RequirePackage{listingsutf8}
 \RequirePackage{heig}
 
@@ -38,11 +39,13 @@
 %\newgeometry{}
 
 \fancyhead[RE,LO]{\includegraphics[height=1cm]{bachelor-school-slim}}
-\fancyhead[LE,RO]{\@ifconfidential}
+\fancyhead[RO]{\@ifconfidential\\{\scriptsize\@version} \textbf{\@shorttitle}}
+\fancyhead[LE]{\@ifconfidential\\\textbf{\@shorttitle} {\scriptsize\@version}}
 
 \fancypagestyle{plain}{
     \fancyhead[RE,LO]{\includegraphics[height=1cm]{bachelor-school-slim}}
-    \fancyhead[LE,RO]{\@ifconfidential}
+    \fancyhead[RO]{\@ifconfidential\\{\scriptsize\@version} \textbf{\@shorttitle}}
+    \fancyhead[LE]{\@ifconfidential\\\textbf{\@shorttitle} {\scriptsize\@version}}
 }
 
 
@@ -203,6 +206,32 @@ Enseignant responsable : & Date et lieu : & Signature : \\[0.5em]
 \vspace*{\fill}
 }
 
+
+\renewcommand\bcStyleTitre[1]{\large\textbf{~#1}}
+\renewcommand\bcStyleSousTitre[1]{\normalsize\textit{#1}}
+\setlength{\logowidth}{30pt}
+
+\newenvironment{pictonote2}[3]{%
+\begin{center}%
+\begin{minipage}{0.85\linewidth}%
+\begin{bclogo}[arrondi=0.1,%
+  marge=11,%
+  sousTitre={#2},%
+  logo={\includegraphics[width=\logowidth]{#3}},%
+  ombre=true,%
+  blur,%
+  barre=snake,%
+  tailleOndu=4.5,%
+  ]{#1}%
+}{%
+\end{bclogo}%
+\end{minipage}%
+\end{center}%
+}
+
+
+
+
 \newlength{\largeurnota}
 \newlength{\paddingnota}
 \newlength{\indentationnota}
@@ -233,14 +262,18 @@ Enseignant responsable : & Date et lieu : & Signature : \\[0.5em]
 \ignorespaces}{%
 \end{list}}
 
-\newenvironment{nota}{\begin{pictonote}{notice}
-}{\end{pictonote}}
-\newenvironment{question}{\begin{pictonote}{question}
-}{\end{pictonote}}
-\newenvironment{important}{\begin{pictonote}{important}
-}{\end{pictonote}}
-\newenvironment{warning}{\begin{pictonote}{warning}
-}{\end{pictonote}}
+%\newenvironment{nota}{\begin{pictonote}{notice}}{\end{pictonote}}
+%\newenvironment{question}{\begin{pictonote}{question}}{\end{pictonote}}
+%\newenvironment{important}{\begin{pictonote}{important}}{\end{pictonote}}
+%\newenvironment{warning}{\begin{pictonote}{warning}}{\end{pictonote}}
+
+\newenvironment{nota}[2][]{\begin{pictonote2}{#2}{#1}{notice}}{\end{pictonote2}}
+\newenvironment{question}[2][]{\begin{pictonote2}{#2}{#1}{question}}{\end{pictonote2}}
+\newenvironment{important}[2][]{\begin{pictonote2}{#2}{#1}{important}}{\end{pictonote2}}
+\newenvironment{warning}[2][]{\begin{pictonote2}{#2}{#1}{warning}}{\end{pictonote2}}
+%\newenvironment{question}{\begin{pictonote}{question}}{\end{pictonote}}
+%\newenvironment{important}{\begin{pictonote}{important}}{\end{pictonote}}
+%\newenvironment{warning}{\begin{pictonote}{warning}}{\end{pictonote}}
 
 \lstset{literate=
   {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1

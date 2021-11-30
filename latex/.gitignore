@@ -4,6 +4,8 @@
 # Dynamic files:
 /_dyn/
 
+*.bcl
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
