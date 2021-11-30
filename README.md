@@ -9,6 +9,8 @@
  - Construction de PDF indiquant les différances entre 2 commits.
  - Construction uniquement d'un sous-fichier LaTeX.
  - Indication du tag git de version (v[0-9]*) dans le PDF.
+ - Auto publication de pre-release lors du push sur main.
+ - Auto publication de release lors du push sur avec un tag de version.
 
 ## Dépendance
 
