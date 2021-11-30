@@ -260,6 +260,9 @@ Enseignant responsable : & Date et lieu : & Signature : \\[0.5em]
   {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1 
 }
 
+\let\@makechapterheadorig\@makechapterhead
+\def\afterchapter{asd}
+\def\@makechapterhead#1{\@makechapterheadorig{#1}\afterchapter}
 
 
 \endinput

@@ -53,4 +53,6 @@ $(patsubst %.tex,%~clean,$(TEX)): %~clean:
 	cd $(dir $*) && latexmk $(LATEXFLAGS) -c $(notdir $*).tex
 	rm -f $*.run.xml $*.bbl
 	rm -f $*.lol
+	rm -f $*.maf
+	rm -f $*.mtc $*.mtc[0-9]*
 
