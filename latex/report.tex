@@ -1,6 +1,7 @@
 %! Author = Gaby Roch
 %! Date = 15.10.21
 
+
 % Preamble
 %\documentclass[a4paper,oneside,12pt,french,draft]{heig-tb}
 %\documentclass[a4paper,twoside,12pt,french,draft]{heig-tb}
@@ -13,12 +14,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{listofitems}
+%\usepackage{heig}
 \usepackage[
     style=alphabetic,
-%    style=reading,
-%    style=numeric,
-%    notetype=foot+end,
+    backref=true,
+    %style=numeric,
+    %style=reading,
 ]{biblatex}
+\usepackage{biblio-everywhere} % show bibliographie as footnote and en document
 \usepackage{lipsum}
 
 \usepackage{subfiles}
@@ -32,34 +35,7 @@
 % On charge les métas informations du TB
 \input{_meta}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Definition of custom command
-%
-% define \autofootcite{list of bibentry} % cite in footnote with bibmark, work for multiple entry separated by comma (,)
-\let\originalcite\cite
-\let\originalfullcite\fullcite
-\newcommand{\autofootcite}[1]{{% Group to localize change to footnote
-    \originalcite{#1}%
-    \readlist*\mylist{#1}%
-    \foreachitem\x\in\mylist[]{%
-        \renewcommand{\thefootnote}{\originalcite{\x}}% Update footnote counter representation
-        \footnotetext[0]{\originalfullcite{\x}}% Print footnote text
-    }%
-}}% Print footnote text
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Use custom command as default
-%
-\let\autocite\autofootcite
-\let\cite\autofootcite
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Configuration du répertoire pour les images
-%
-\graphicspath{ {./images} }
-\bibliography{biblio}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
