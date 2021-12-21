@@ -88,21 +88,27 @@ Branche principale à utiliser : `main` (pour utiliser une autre branche, adapte
 
 Lors d'un push sur `main`, le rapport est automatiquement construit et publier dans une releases github.
 
-## Dossier
+## Dossiers et fichiers
 
  - `diff-*.zip`: PDF de diff avec `*`
  - `diff-*/`: Construction des fichiers de différence avec `*` (si corresponds à `*..*` contient les différences entre les deux commits referencé)
  - `lastdiff.zip`: PDF de difference avec la dernière version taggée
  - `lastdiff`: Difference avec la dernière version taggée
+ - `latex/`: Contient les sources LaTeX
  - `latex/*.tex`: Fichier LaTeX de premier niveau
  - `latex/[a-zA-Z0-9]*/`: Contients des subfile LaTeX (ils sont inclus dans un/des fichiers `latex/*.tex`
  - `latex/_dyn/`: Contient des fichiers générée dynamiquement par `make` pour LaTeX
  - `latex/_meta.tex`: Méta information à propos du TB (titre, auteur, ...)
- - `latex/`: Contient les sources LaTeX
  - `latex/publishable-summary.tex`: Résumé publiable (également inclue de le rapport)
  - `latex/report.tex`: Rapport de TB
- - `latex/bibliography.tex`: Toutes les entrées bibliographiques
- - `latex/bibliography-draft.tex`: Toutes les entrées bibliographiques, avec les identifiants pour les citer dans LaTeX
+ - `latex/biblio.bib`: Contient la définition des entrée de bibliographie
+ - `latex/biblio-also-as-footnote.sty`: Définition pour mettre les références bibliographique en pied de page en plus de la section bibliographie à la fin du document
+ - `latex/bibliography.tex`: Fichier de construction pour un PDF contenant toutes les entrées de la bibliographie
+ - `latex/bibliography-draft.tex`: Fichier de construction pour un PDF contenant toutes les entrées de la bibliographie référencer par leur identifiant à utiliser pour les référencer dans les documents LaTeX
+
+## Bibliographie
+
+Vous pouvez gérer votre bibliographie dans un outils externe tel que [Zotero](https://www.zotero.org/) pour autant qu'il gére l'export de la bibliothèque au format BibLaTeX.
 
 ## Crédits
 
